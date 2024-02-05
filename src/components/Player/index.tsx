@@ -1,21 +1,22 @@
 import React, { useCallback } from "react";
-import type { ButtonProps } from "react-native";
-import { View, Button, StyleSheet } from "react-native";
+import type { PressableProps } from "react-native";
+import { View, StyleSheet, Pressable } from "react-native";
 import TrackPlayer, {
   State,
   usePlaybackState,
 } from "react-native-track-player";
+import Icon from "react-native-vector-icons/MaterialIcons";
 
 export function Player(): JSX.Element {
   const playbackState = usePlaybackState();
 
-  const handlePrevPress: ButtonProps["onPress"] = async () => {
+  const handlePrevPress: PressableProps["onPress"] = async () => {
     await TrackPlayer.skipToPrevious();
   };
-  const handleNextPress: ButtonProps["onPress"] = async () => {
+  const handleNextPress: PressableProps["onPress"] = async () => {
     await TrackPlayer.skipToNext();
   };
-  const handleTogglePlayPause: ButtonProps["onPress"] =
+  const handleTogglePlayPause: PressableProps["onPress"] =
     useCallback(async () => {
       const currentTrack = await TrackPlayer.getActiveTrack();
 
@@ -32,12 +33,23 @@ export function Player(): JSX.Element {
     }, [playbackState]);
   return (
     <View style={styles.player}>
-      <Button title="Prev" onPress={handlePrevPress} />
-      <Button
-        title={playbackState.state === State.Playing ? "Pause" : "Play"}
-        onPress={handleTogglePlayPause}
-      />
-      <Button title="Next" onPress={handleNextPress} />
+      <Pressable onPress={handlePrevPress}>
+        <Icon name="skip-previous" size={40} color="#7CEC9F" />
+      </Pressable>
+      <Pressable onPress={handleTogglePlayPause}>
+        <Icon
+          name={
+            playbackState.state === State.Playing
+              ? "pause-circle"
+              : "play-circle"
+          }
+          size={40}
+          color="#25CCF7"
+        />
+      </Pressable>
+      <Pressable onPress={handleNextPress}>
+        <Icon name="skip-next" size={40} color="#7CEC9F" />
+      </Pressable>
     </View>
   );
 }
