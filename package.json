@@ -12,6 +12,7 @@
     "format": "yarn lint && yarn pretty"
   },
   "dependencies": {
+    "@react-native-community/slider": "^4.5.0",
     "react": "18.2.0",
     "react-native": "0.73.3",
     "react-native-track-player": "^4.0.1",
