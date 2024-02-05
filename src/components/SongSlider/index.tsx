@@ -16,6 +16,13 @@ export function SongSlider(): JSX.Element {
       <View>
         <Text>{new Date(position * 1000).toISOString().substring(15, 19)}</Text>
       </View>
+      <View>
+        <Text>
+          {new Date((duration - position) * 1000)
+            .toISOString()
+            .substring(15, 19)}
+        </Text>
+      </View>
     </View>
   );
 }
