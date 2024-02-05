@@ -7,7 +7,7 @@ import TrackPlayer, {
 } from "react-native-track-player";
 import Icon from "react-native-vector-icons/MaterialIcons";
 
-export function Player(): JSX.Element {
+export function Controllers(): JSX.Element {
   const playbackState = usePlaybackState();
 
   const handlePrevPress: PressableProps["onPress"] = async () => {

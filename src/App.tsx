@@ -6,7 +6,7 @@ import {
   StyleSheet,
   Text,
 } from "react-native";
-import { Player } from "./components/Player";
+import { Controllers } from "./components/Controllers";
 import { addTracks, setupPlayer } from "../track-player-service";
 
 export default function App(): JSX.Element {
@@ -37,7 +37,7 @@ export default function App(): JSX.Element {
     <SafeAreaView style={styles.main}>
       <StatusBar />
       <Text style={styles.heading}>Music Player</Text>
-      {isPlayerReady ? <Player /> : <ActivityIndicator />}
+      {isPlayerReady ? <Controllers /> : <ActivityIndicator />}
     </SafeAreaView>
   );
 }
