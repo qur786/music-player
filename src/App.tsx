@@ -1,9 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { SafeAreaView, StatusBar, StyleSheet, Text } from "react-native";
+import {
+  ActivityIndicator,
+  SafeAreaView,
+  StatusBar,
+  StyleSheet,
+  Text,
+} from "react-native";
+import { Player } from "./components/Player";
 import { addTracks, setupPlayer } from "../track-player-service";
 
 export default function App(): JSX.Element {
-  const [, setIsPlayerReady] = useState<boolean>(false);
+  const [isPlayerReady, setIsPlayerReady] = useState<boolean>(false);
 
   useEffect(() => {
     async function setup(): Promise<boolean> {
@@ -12,7 +19,7 @@ export default function App(): JSX.Element {
         await addTracks([
           {
             title: "Animal Walk bgm",
-            url: require("./assets/animal walk.mp3"),
+            url: require("../assets/animal-walk.mp3"),
             artist: "Sandeep Reddy",
             album: "Animal",
             artwork: "./assets/animal-wallpaper.jpg",
@@ -27,14 +34,18 @@ export default function App(): JSX.Element {
   }, []);
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.main}>
       <StatusBar />
       <Text style={styles.heading}>Music Player</Text>
+      {isPlayerReady ? <Player /> : <ActivityIndicator />}
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  main: {
+    height: "100%",
+  },
   heading: {
     textAlign: "center",
     fontSize: 24,
