@@ -14,6 +14,12 @@ const RepeatModeIcons: Record<RepeatMode, string> = {
   [RepeatMode.Track]: "repeat-one",
 };
 
+const RepeatModeQueue: RepeatMode[] = [
+  RepeatMode.Off,
+  RepeatMode.Queue,
+  RepeatMode.Track,
+];
+
 export function Controllers(): JSX.Element {
   const [repeatMode, setRepeatMode] = useState<RepeatMode>(RepeatMode.Off);
   const playbackState = usePlaybackState();
@@ -40,9 +46,20 @@ export function Controllers(): JSX.Element {
       }
     }, [playbackState]);
 
+  const handleRepeatModePress: PressableProps["onPress"] = () => {
+    setRepeatMode((prev) => {
+      const index = RepeatModeQueue.findIndex((ele) => ele === prev);
+      const newIndex = index === RepeatModeQueue.length - 1 ? 0 : index + 1;
+      const newRepeatMode = RepeatModeQueue[newIndex];
+      TrackPlayer.setRepeatMode(newRepeatMode);
+      return newRepeatMode;
+    });
+  };
+
   useEffect(() => {
     TrackPlayer.getRepeatMode().then(setRepeatMode).catch(console.log);
-  }, []);
+  }, []); // Setting up the repeat mode in the state for the first time
+
   return (
     <View style={styles.container}>
       <Pressable>
@@ -67,7 +84,7 @@ export function Controllers(): JSX.Element {
           <Icon name="skip-next" size={40} color="white" />
         </Pressable>
       </View>
-      <Pressable>
+      <Pressable onPress={handleRepeatModePress}>
         <Icon name={RepeatModeIcons[repeatMode]} size={20} color="#2ECC72" />
       </Pressable>
     </View>
