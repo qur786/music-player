@@ -1,10 +1,18 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import Slider from "@react-native-community/slider";
-import { useProgress } from "react-native-track-player";
+import TrackPlayer, { useProgress } from "react-native-track-player";
+import type { SliderProps } from "@react-native-community/slider";
 
 export function SongSlider(): JSX.Element {
   const { duration, position } = useProgress();
+
+  const handleSliderThumbChange: SliderProps["onSlidingComplete"] = async (
+    value
+  ) => {
+    await TrackPlayer.seekTo(value);
+  };
+
   return (
     <View>
       <Slider
@@ -14,6 +22,7 @@ export function SongSlider(): JSX.Element {
         thumbTintColor="#FFFFFF"
         minimumTrackTintColor="#FFFFFF"
         maximumTrackTintColor="#FFFFFF"
+        onSlidingComplete={handleSliderThumbChange}
       />
       <View style={styles.timeContainer}>
         <Text style={styles.startTime}>
