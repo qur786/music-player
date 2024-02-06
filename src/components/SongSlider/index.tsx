@@ -9,11 +9,14 @@ export function SongSlider(): JSX.Element {
   const [isThumbChanging, setIsThumbChanging] = useState(false);
   const [newPosition, setNewPosition] = useState(0);
 
-  const handleSliderThumbComplete: SliderProps["onSlidingComplete"] = async (
+  const handleSliderThumbComplete: SliderProps["onSlidingComplete"] = (
     value
   ) => {
-    setIsThumbChanging(false);
-    await TrackPlayer.seekTo(value);
+    TrackPlayer.seekTo(value).finally(() => {
+      setTimeout(() => {
+        setIsThumbChanging(false);
+      }, 1000); // Delay is needed otherwise, until the 'isThumbChanging' state becomes true, the progress 'position' variable contains the previous value, so for very brief point of time, we are seeing previous position instead of the new position value
+    });
   };
 
   const handleSliderThumbChange: SliderProps["onValueChange"] = (value) => {
