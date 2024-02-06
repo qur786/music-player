@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import Slider from "@react-native-community/slider";
 import TrackPlayer, { useProgress } from "react-native-track-player";
@@ -6,11 +6,19 @@ import type { SliderProps } from "@react-native-community/slider";
 
 export function SongSlider(): JSX.Element {
   const { duration, position } = useProgress();
+  const [isThumbChanging, setIsThumbChanging] = useState(false);
+  const [newPosition, setNewPosition] = useState(0);
 
-  const handleSliderThumbChange: SliderProps["onSlidingComplete"] = async (
+  const handleSliderThumbComplete: SliderProps["onSlidingComplete"] = async (
     value
   ) => {
+    setIsThumbChanging(false);
     await TrackPlayer.seekTo(value);
+  };
+
+  const handleSliderThumbChange: SliderProps["onValueChange"] = (value) => {
+    setIsThumbChanging(true);
+    setNewPosition(value);
   };
 
   return (
@@ -22,14 +30,20 @@ export function SongSlider(): JSX.Element {
         thumbTintColor="#FFFFFF"
         minimumTrackTintColor="#FFFFFF"
         maximumTrackTintColor="#FFFFFF"
-        onSlidingComplete={handleSliderThumbChange}
+        onSlidingComplete={handleSliderThumbComplete}
+        onValueChange={handleSliderThumbChange}
       />
       <View style={styles.timeContainer}>
         <Text style={styles.startTime}>
-          {new Date(position * 1000).toISOString().substring(15, 19)}
+          {new Date((isThumbChanging === true ? newPosition : position) * 1000)
+            .toISOString()
+            .substring(15, 19)}
         </Text>
         <Text style={styles.endTime}>
-          {new Date((duration - position) * 1000)
+          {new Date(
+            (duration - (isThumbChanging === true ? newPosition : position)) *
+              1000
+          )
             .toISOString()
             .substring(15, 19)}
         </Text>
