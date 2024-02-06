@@ -36,9 +36,9 @@ export function SongSlider(): JSX.Element {
         value={position}
         maximumValue={duration}
         minimumValue={0}
-        thumbTintColor="#FFFFFF"
-        minimumTrackTintColor="#FFFFFF"
-        maximumTrackTintColor="#FFFFFF"
+        thumbTintColor="white"
+        minimumTrackTintColor="white"
+        maximumTrackTintColor="white"
         onSlidingComplete={handleSliderThumbComplete}
         onValueChange={handleSliderThumbChange}
       />
