@@ -32,9 +32,9 @@ export function Controllers(): JSX.Element {
       }
     }, [playbackState]);
   return (
-    <View style={styles.player}>
+    <View style={styles.playerContainer}>
       <Pressable onPress={handlePrevPress}>
-        <Icon name="skip-previous" size={40} color="#7CEC9F" />
+        <Icon name="skip-previous" size={40} color="white" />
       </Pressable>
       <Pressable onPress={handleTogglePlayPause}>
         <Icon
@@ -43,24 +43,22 @@ export function Controllers(): JSX.Element {
               ? "pause-circle"
               : "play-circle"
           }
-          size={40}
-          color="#25CCF7"
+          size={60}
+          color="#2ECC72"
         />
       </Pressable>
       <Pressable onPress={handleNextPress}>
-        <Icon name="skip-next" size={40} color="#7CEC9F" />
+        <Icon name="skip-next" size={40} color="white" />
       </Pressable>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  player: {
-    flex: 1,
+  playerContainer: {
     flexDirection: "row",
     justifyContent: "center",
-    borderColor: "red",
-    alignItems: "flex-start",
+    alignItems: "center",
     gap: 10,
   },
 });
