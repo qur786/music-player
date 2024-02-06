@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import type { PressableProps } from "react-native";
+import { View, Text, StyleSheet, Pressable } from "react-native";
 import Slider from "@react-native-community/slider";
 import TrackPlayer, { useProgress } from "react-native-track-player";
 import type { SliderProps } from "@react-native-community/slider";
@@ -8,6 +9,7 @@ export function SongSlider(): JSX.Element {
   const { duration, position } = useProgress();
   const [isThumbChanging, setIsThumbChanging] = useState(false);
   const [newPosition, setNewPosition] = useState(0);
+  const [showTotalDuration, setShowTotalDuration] = useState(false);
 
   const handleSliderThumbComplete: SliderProps["onSlidingComplete"] = (
     value
@@ -22,6 +24,10 @@ export function SongSlider(): JSX.Element {
   const handleSliderThumbChange: SliderProps["onValueChange"] = (value) => {
     setIsThumbChanging(true);
     setNewPosition(value);
+  };
+
+  const handleShowTotalDurationPress: PressableProps["onPress"] = () => {
+    setShowTotalDuration((prev) => !prev);
   };
 
   return (
@@ -42,14 +48,21 @@ export function SongSlider(): JSX.Element {
             .toISOString()
             .substring(15, 19)}
         </Text>
-        <Text style={styles.endTime}>
-          {new Date(
-            (duration - (isThumbChanging === true ? newPosition : position)) *
-              1000
-          )
-            .toISOString()
-            .substring(15, 19)}
-        </Text>
+        <Pressable onPress={handleShowTotalDurationPress}>
+          <Text style={styles.endTime}>
+            {new Date(
+              (duration -
+                (showTotalDuration === false
+                  ? isThumbChanging === true
+                    ? newPosition
+                    : position
+                  : 0)) *
+                1000
+            )
+              .toISOString()
+              .substring(15, 19)}
+          </Text>
+        </Pressable>
       </View>
     </View>
   );
