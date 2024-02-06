@@ -38,8 +38,6 @@ export function Player(): JSX.Element {
 
 const styles = StyleSheet.create({
   container: {
-    height: "80%",
-    flexDirection: "column",
-    justifyContent: "space-between",
+    height: "100%",
   },
 });
