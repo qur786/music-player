@@ -1,6 +1,13 @@
 import type { PropsWithChildren } from "react";
+import { Dirs, FileSystem } from "react-native-file-access";
 import { PermissionsAndroid, Platform } from "react-native";
-import React, { createContext, useCallback, useContext, useState } from "react";
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import {
   SortSongFields,
   SortSongOrder,
@@ -14,6 +21,8 @@ interface MusicContext {
   requestRefetch: () => Promise<MusicFile>;
   loading: boolean;
 }
+
+const MUSIC_FILE_PATH = "/music-file-path.json";
 
 const MusicContext = createContext<MusicContext>({
   musicFiles: [],
@@ -86,7 +95,12 @@ export function MusicProvider({ children }: PropsWithChildren): JSX.Element {
           console.log(songsResults);
           // TODO: notify user that could not find any music files
         } else {
+          // TODO: use try catch
           output = songsResults;
+          await FileSystem.writeFile(
+            Dirs.DocumentDir + MUSIC_FILE_PATH,
+            JSON.stringify(songsResults)
+          );
           setMusicFiles(songsResults);
         }
       } else {
@@ -95,6 +109,14 @@ export function MusicProvider({ children }: PropsWithChildren): JSX.Element {
       setLoading(false);
       return output;
     }, []);
+
+  useEffect(() => {
+    FileSystem.readFile(Dirs.DocumentDir + MUSIC_FILE_PATH)
+      .then((data) => {
+        setMusicFiles(JSON.parse(data) as MusicFile);
+      })
+      .catch(console.log);
+  }, []);
 
   return (
     <MusicContext.Provider value={{ requestRefetch, musicFiles, loading }}>
