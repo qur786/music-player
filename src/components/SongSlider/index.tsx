@@ -1,6 +1,7 @@
 import type { PressableProps } from "react-native";
 import Slider from "@react-native-community/slider";
 import type { SliderProps } from "@react-native-community/slider";
+import { formatDuration } from "../../utils";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import React, { useState } from "react";
 import TrackPlayer, { useProgress } from "react-native-track-player";
@@ -44,13 +45,11 @@ export function SongSlider(): JSX.Element {
       />
       <View style={styles.timeContainer}>
         <Text style={styles.startTime}>
-          {new Date((isThumbChanging === true ? newPosition : position) * 1000)
-            .toISOString()
-            .substring(15, 19)}
+          {formatDuration(isThumbChanging === true ? newPosition : position)}
         </Text>
         <Pressable onPress={handleShowTotalDurationPress}>
           <Text style={styles.endTime}>
-            {new Date(
+            {formatDuration(
               (duration -
                 (showTotalDuration === false
                   ? isThumbChanging === true
@@ -58,9 +57,7 @@ export function SongSlider(): JSX.Element {
                     : position
                   : 0)) *
                 1000
-            )
-              .toISOString()
-              .substring(15, 19)}
+            )}
           </Text>
         </Pressable>
       </View>
