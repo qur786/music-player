@@ -9,12 +9,7 @@ export function Home(): JSX.Element {
   const [isPlayerReady, setIsPlayerReady] = useState<boolean>(false);
 
   useEffect(() => {
-    async function setup(): Promise<boolean> {
-      const isSetup = await setupPlayer();
-      return isSetup;
-    }
-
-    setup().then(setIsPlayerReady).catch(console.log);
+    setupPlayer().then(setIsPlayerReady).catch(console.log);
   }, []);
 
   return (
