@@ -1,5 +1,6 @@
 import { Dimensions } from "react-native";
 import { Home } from "./screens/Home";
+import { MusicProvider } from "./components/MusicProvider";
 import { NavigationContainer } from "@react-navigation/native";
 import { Playlist } from "./screens/Playlist";
 import React from "react";
@@ -17,17 +18,19 @@ const { height } = Dimensions.get("window");
 
 export default function App(): JSX.Element {
   return (
-    <NavigationContainer>
-      <Navigator
-        initialRouteName={Routes.Home}
-        screenOptions={{
-          headerShown: false,
-          contentStyle: styles.main,
-        }}>
-        <Screen name={Routes.Home} component={Home} />
-        <Screen name={Routes.Playlist} component={Playlist} />
-      </Navigator>
-    </NavigationContainer>
+    <MusicProvider>
+      <NavigationContainer>
+        <Navigator
+          initialRouteName={Routes.Playlist}
+          screenOptions={{
+            headerShown: false,
+            contentStyle: styles.main,
+          }}>
+          <Screen name={Routes.Home} component={Home} />
+          <Screen name={Routes.Playlist} component={Playlist} />
+        </Navigator>
+      </NavigationContainer>
+    </MusicProvider>
   );
 }
 
