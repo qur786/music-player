@@ -1,6 +1,6 @@
 import React from "react";
-import { View, Text, Image, Dimensions, StyleSheet } from "react-native";
 import type { Track } from "react-native-track-player";
+import { Dimensions, Image, StyleSheet, Text, View } from "react-native";
 
 interface SongInfoProps {
   song: Track | null | undefined;

@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { StyleSheet, View } from "react-native";
-import TrackPlayer, {
-  useTrackPlayerEvents,
-  type Track,
-  Event,
-} from "react-native-track-player";
 import { Controllers } from "../Controllers";
 import { SongInfo } from "../SongInfo";
 import { SongSlider } from "../SongSlider";
+import React, { useEffect, useState } from "react";
+import { StyleSheet, View } from "react-native";
+import TrackPlayer, {
+  Event,
+  type Track,
+  useTrackPlayerEvents,
+} from "react-native-track-player";
 
 export function Player(): JSX.Element {
   const [currentTrack, setCurrentTrack] = useState<Track>();

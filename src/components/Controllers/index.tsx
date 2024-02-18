@@ -1,12 +1,12 @@
-import React, { useCallback, useEffect, useState } from "react";
+import Icon from "react-native-vector-icons/MaterialIcons";
 import type { PressableProps } from "react-native";
-import { View, StyleSheet, Pressable } from "react-native";
+import { Pressable, StyleSheet, View } from "react-native";
+import React, { useEffect, useState } from "react";
 import TrackPlayer, {
   RepeatMode,
   State,
   usePlaybackState,
 } from "react-native-track-player";
-import Icon from "react-native-vector-icons/MaterialIcons";
 
 const RepeatModeIcons: Record<RepeatMode, string> = {
   [RepeatMode.Off]: "sync-disabled",
@@ -21,30 +21,31 @@ const RepeatModeQueue: RepeatMode[] = [
 ];
 
 export function Controllers(): JSX.Element {
-  const [repeatMode, setRepeatMode] = useState<RepeatMode>(RepeatMode.Off);
   const playbackState = usePlaybackState();
+  const [repeatMode, setRepeatMode] = useState<RepeatMode>(RepeatMode.Off);
 
   const handlePrevPress: PressableProps["onPress"] = async () => {
     await TrackPlayer.skipToPrevious();
   };
+
   const handleNextPress: PressableProps["onPress"] = async () => {
     await TrackPlayer.skipToNext();
   };
-  const handleTogglePlayPause: PressableProps["onPress"] =
-    useCallback(async () => {
-      const currentTrack = await TrackPlayer.getActiveTrack();
 
-      if (currentTrack) {
-        if (
-          playbackState.state === State.Paused ||
-          playbackState.state === State.Ready
-        ) {
-          await TrackPlayer.play();
-        } else {
-          await TrackPlayer.pause();
-        }
+  const handleTogglePlayPause: PressableProps["onPress"] = async () => {
+    const currentTrack = await TrackPlayer.getActiveTrack();
+
+    if (currentTrack) {
+      if (
+        playbackState.state === State.Paused ||
+        playbackState.state === State.Ready
+      ) {
+        await TrackPlayer.play();
+      } else {
+        await TrackPlayer.pause();
       }
-    }, [playbackState]);
+    }
+  };
 
   const handleRepeatModePress: PressableProps["onPress"] = () => {
     setRepeatMode((prev) => {
@@ -63,7 +64,7 @@ export function Controllers(): JSX.Element {
   return (
     <View style={styles.container}>
       <Pressable>
-        <Icon name={"share"} size={20} color="#2ECC72" />
+        <Icon name="share" size={20} color="#2ECC72" />
       </Pressable>
       <View style={styles.playerContainer}>
         <Pressable onPress={handlePrevPress}>

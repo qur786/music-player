@@ -1,5 +1,5 @@
-import TrackPlayer, { Event, RepeatMode } from "react-native-track-player";
 import type { ServiceHandler, Track } from "react-native-track-player";
+import TrackPlayer, { Event, RepeatMode } from "react-native-track-player";
 
 /**
  * A function to setup player. This needs to be done once for the app.

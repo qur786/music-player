@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { Player } from "./components/Player";
 import {
   ActivityIndicator,
   Dimensions,
@@ -7,7 +7,7 @@ import {
   StyleSheet,
   Text,
 } from "react-native";
-import { Player } from "./components/Player";
+import React, { useEffect, useState } from "react";
 import { addTracks, setupPlayer } from "../track-player-service";
 
 const { height } = Dimensions.get("window");

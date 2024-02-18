@@ -1,9 +1,9 @@
-import React, { useState } from "react";
 import type { PressableProps } from "react-native";
-import { View, Text, StyleSheet, Pressable } from "react-native";
 import Slider from "@react-native-community/slider";
-import TrackPlayer, { useProgress } from "react-native-track-player";
 import type { SliderProps } from "@react-native-community/slider";
+import { Pressable, StyleSheet, Text, View } from "react-native";
+import React, { useState } from "react";
+import TrackPlayer, { useProgress } from "react-native-track-player";
 
 export function SongSlider(): JSX.Element {
   const { duration, position } = useProgress();

@@ -12,34 +12,17 @@ module.exports = {
     {
       files: ["*.js", "*.ts", "*.jsx", "*.tsx"],
       rules: {
-        "import/order": [
+        "@typescript-eslint/consistent-type-imports": "error",
+        "sort-imports": [
           "error",
           {
-            groups: [
-              ["builtin", "external"],
-              "internal",
-              ["parent", "sibling", "index"],
-              ["type"],
-            ],
-            pathGroups: [
-              {
-                pattern: "{react,react-dom,react-native}",
-                group: "external",
-                position: "before",
-              },
-            ],
-            pathGroupsExcludedImportTypes: [
-              "react",
-              "react-dom",
-              "react-native",
-            ],
-            alphabetize: {
-              order: "asc",
-              caseInsensitive: true,
-            },
+            ignoreCase: false,
+            ignoreDeclarationSort: false,
+            ignoreMemberSort: false,
+            memberSyntaxSortOrder: ["single", "multiple", "all", "none"],
+            allowSeparatedGroups: false,
           },
         ],
-        "@typescript-eslint/consistent-type-imports": "error",
       },
     },
   ],
