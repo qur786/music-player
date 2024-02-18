@@ -1,65 +1,24 @@
-import { Player } from "./components/Player";
-import {
-  ActivityIndicator,
-  Dimensions,
-  SafeAreaView,
-  StatusBar,
-  StyleSheet,
-  Text,
-} from "react-native";
-import React, { useEffect, useState } from "react";
-import { addTracks, setupPlayer } from "../track-player-service";
+import { Home } from "./screens/Home";
+import { NavigationContainer } from "@react-navigation/native";
+import React from "react";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { SafeAreaView, StatusBar } from "react-native";
 
-const { height } = Dimensions.get("window");
+const Routes = {
+  Home: "home",
+} as const;
+
+const { Navigator, Screen } = createNativeStackNavigator();
 
 export default function App(): JSX.Element {
-  const [isPlayerReady, setIsPlayerReady] = useState<boolean>(false);
-
-  useEffect(() => {
-    async function setup(): Promise<boolean> {
-      const isSetup = await setupPlayer();
-      if (isSetup === true) {
-        await addTracks([
-          {
-            title: "Animal Walk bgm",
-            url: require("../assets/animal-walk.mp3"),
-            artist: "Sandeep Reddy",
-            album: "Animal",
-            artwork: "assets/animal-wallpaper.jpg",
-          },
-        ]);
-      }
-
-      return isSetup;
-    }
-
-    setup().then(setIsPlayerReady).catch(console.log);
-  }, []);
-
   return (
-    <SafeAreaView style={styles.main}>
+    <SafeAreaView>
       <StatusBar />
-      <Text style={styles.heading}>Music Player</Text>
-      {isPlayerReady ? <Player /> : <ActivityIndicator />}
+      <NavigationContainer>
+        <Navigator initialRouteName={Routes.Home}>
+          <Screen name={Routes.Home} component={Home} />
+        </Navigator>
+      </NavigationContainer>
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  main: {
-    height,
-    backgroundColor: "#8395A7",
-    paddingVertical: 10,
-    flexDirection: "column",
-    alignItems: "center",
-    gap: 10,
-  },
-  heading: {
-    textAlign: "center",
-    color: "white",
-    fontSize: 32,
-    fontWeight: "bold",
-    paddingVertical: 8,
-    fontFamily: "cursive",
-  },
-});
