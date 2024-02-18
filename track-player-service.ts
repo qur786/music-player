@@ -1,6 +1,9 @@
 import TrackPlayer, { Event, RepeatMode } from "react-native-track-player";
 import type { ServiceHandler, Track } from "react-native-track-player";
 
+/**
+ * A function to setup player. This needs to be done once for the app.
+ */
 export async function setupPlayer(): Promise<boolean> {
   let isSetup = false;
   try {
@@ -14,6 +17,9 @@ export async function setupPlayer(): Promise<boolean> {
   return isSetup;
 }
 
+/**
+ * A function to add tracks to the player. Additionaly, it adds repeat mode.
+ */
 export async function addTracks(tracks: Track[]): Promise<void> {
   await TrackPlayer.add(tracks);
   await TrackPlayer.setRepeatMode(RepeatMode.Queue);
