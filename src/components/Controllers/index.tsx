@@ -1,5 +1,6 @@
 import Icon from "react-native-vector-icons/MaterialIcons";
 import type { PressableProps } from "react-native";
+import Snackbar from "react-native-snackbar";
 import { Pressable, StyleSheet, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import TrackPlayer, {
@@ -60,7 +61,12 @@ export function Controllers(): JSX.Element {
       const index = RepeatModeQueue.findIndex((ele) => ele === prev);
       const newIndex = index === RepeatModeQueue.length - 1 ? 0 : index + 1;
       const newRepeatMode = RepeatModeQueue[newIndex];
-      TrackPlayer.setRepeatMode(newRepeatMode);
+      TrackPlayer.setRepeatMode(newRepeatMode).catch(() => {
+        Snackbar.show({
+          text: "Error on changing to repeat mode.",
+          duration: Snackbar.LENGTH_LONG,
+        });
+      });
       return newRepeatMode;
     });
   };
@@ -121,5 +127,6 @@ const styles = StyleSheet.create({
   shareContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
+    paddingHorizontal: 8,
   },
 });
