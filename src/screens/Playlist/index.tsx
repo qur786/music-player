@@ -8,16 +8,18 @@ import { formatDuration } from "../../utils";
 import { useMusicFiles } from "../../components/MusicProvider";
 import {
   ActivityIndicator,
+  Button,
   FlatList,
   Image,
   Pressable,
+  RefreshControl,
   StyleSheet,
   Text,
   View,
 } from "react-native";
 
 export function Playlist({ navigation }: PlaylistProps): JSX.Element {
-  const { loading, tracks } = useMusicFiles();
+  const { loading, tracks, requestRefetch } = useMusicFiles();
 
   const handleMusicItemClick = async (track: Track) => {
     await TrackPlayer.load(track);
@@ -28,12 +30,27 @@ export function Playlist({ navigation }: PlaylistProps): JSX.Element {
 
   return (
     <View style={styles.main}>
-      {loading ? (
-        <ActivityIndicator size="large" />
+      {tracks.length === 0 ? (
+        loading ? (
+          <ActivityIndicator size="large" />
+        ) : (
+          <View style={styles.noSongContainer}>
+            <Text>No songs available</Text>
+            <Button
+              title="Refresh"
+              onPress={() => {
+                requestRefetch().catch(console.log);
+              }}
+            />
+          </View>
+        )
       ) : (
         <FlatList
           data={tracks}
           contentContainerStyle={styles.listContainer}
+          refreshControl={
+            <RefreshControl refreshing={loading} onRefresh={requestRefetch} />
+          }
           renderItem={(song) => (
             <Pressable
               key={song.item.title}
@@ -81,4 +98,10 @@ const styles = StyleSheet.create({
   },
   listImage: { width: 40, height: 40, objectFit: "cover" },
   listTitle: { color: "#2C3335", fontSize: 16 },
+  noSongContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    gap: 12,
+  },
 });
