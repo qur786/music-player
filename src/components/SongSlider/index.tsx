@@ -50,13 +50,12 @@ export function SongSlider(): JSX.Element {
         <Pressable onPress={handleShowTotalDurationPress}>
           <Text style={styles.endTime}>
             {formatDuration(
-              (duration -
+              duration -
                 (showTotalDuration === false
                   ? isThumbChanging === true
                     ? newPosition
                     : position
-                  : 0)) *
-                1000
+                  : 0)
             )}
           </Text>
         </Pressable>
