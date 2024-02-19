@@ -26,6 +26,7 @@ export function Playlist({ navigation }: PlaylistProps): JSX.Element {
   const handleMusicItemClick = async (track: Track) => {
     await TrackPlayer.load(track);
     await TrackPlayer.play();
+    // TODO: add error handing
     navigation.navigate(Routes.Home);
   };
 
