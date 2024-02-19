@@ -4,16 +4,14 @@ import { Playlist } from "./screens/Playlist";
 import type { PressableProps } from "react-native";
 import React from "react";
 import type { RootStackParamList } from "./routes";
-import { Routes } from "./routes";
-import { StyleSheet } from "react-native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Dimensions, Pressable, Text } from "react-native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MusicProvider, useMusicFiles } from "./components/MusicProvider";
+import { Pressable, Text } from "react-native";
+import { Routes, RoutesIcons } from "./routes";
 
-const { Navigator, Screen } = createNativeStackNavigator<RootStackParamList>();
+const { Navigator, Screen } = createBottomTabNavigator<RootStackParamList>();
 
-const { height } = Dimensions.get("window");
-
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function HeaderRefreshButton(): JSX.Element {
   const { requestRefetch } = useMusicFiles();
 
@@ -21,7 +19,9 @@ function HeaderRefreshButton(): JSX.Element {
     requestRefetch().catch(console.log);
   };
   return (
-    <Pressable onPress={handleRefreshPress}>
+    <Pressable
+      onPress={handleRefreshPress}
+      android_ripple={{ color: "#E74292" }}>
       <Text>Reload</Text>
       {/* TODO: use icon */}
     </Pressable>
@@ -35,16 +35,22 @@ export default function App(): JSX.Element {
         <Navigator
           initialRouteName={Routes.Playlist}
           screenOptions={{
-            contentStyle: styles.main,
-            headerSearchBarOptions: {},
+            tabBarActiveTintColor: "#E74292",
+            tabBarHideOnKeyboard: true,
             headerTitleAlign: "center",
           }}>
-          <Screen name={Routes.Home} component={Home} />
+          <Screen
+            name={Routes.Home}
+            component={Home}
+            options={{
+              tabBarIcon: RoutesIcons.Home,
+            }}
+          />
           <Screen
             name={Routes.Playlist}
             component={Playlist}
             options={{
-              headerRight: HeaderRefreshButton,
+              tabBarIcon: RoutesIcons.Playlist,
             }}
           />
         </Navigator>
@@ -52,9 +58,3 @@ export default function App(): JSX.Element {
     </MusicProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  main: {
-    height,
-  },
-});
