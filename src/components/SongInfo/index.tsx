@@ -23,9 +23,7 @@ export function SongInfo({ song }: SongInfoProps): JSX.Element {
       />
       <View style={styles.infoContainer}>
         <Text style={styles.title}>{song?.title ?? "Title"}</Text>
-        <Text style={styles.artistAlbum}>
-          {song?.artist ?? "Artist"} - {song?.album ?? "Album"}
-        </Text>
+        <Text>Artist: {song?.artist ?? "Artist"}</Text>
       </View>
     </View>
   );
@@ -39,19 +37,16 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     gap: 10,
     paddingVertical: 16,
+    paddingHorizontal: 8,
   },
   artWork: {
-    width: width - 20,
-    height: "80%",
+    width: width - 40,
+    height: "60%",
     objectFit: "contain",
   },
   infoContainer: { flexDirection: "column", alignItems: "center", gap: 6 },
-  artistAlbum: {
-    color: "white",
-  },
   title: {
-    fontSize: 24,
+    fontSize: 16,
     fontWeight: "bold",
-    color: "white",
   },
 });

@@ -68,7 +68,7 @@ export function Controllers(): JSX.Element {
       </Pressable>
       <View style={styles.playerContainer}>
         <Pressable onPress={handlePrevPress}>
-          <Icon name="skip-previous" size={40} color="white" />
+          <Icon name="skip-previous" size={40} color="black" />
         </Pressable>
         <Pressable onPress={handleTogglePlayPause}>
           <Icon
@@ -82,7 +82,7 @@ export function Controllers(): JSX.Element {
           />
         </Pressable>
         <Pressable onPress={handleNextPress}>
-          <Icon name="skip-next" size={40} color="white" />
+          <Icon name="skip-next" size={40} color="black" />
         </Pressable>
       </View>
       <Pressable onPress={handleRepeatModePress}>

@@ -19,6 +19,7 @@ export default function App(): JSX.Element {
             tabBarActiveTintColor: "#E74292",
             tabBarHideOnKeyboard: true,
             headerTitleAlign: "center",
+            headerTitle: "Music Player",
           }}>
           <Screen
             name={Routes.Home}

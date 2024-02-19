@@ -37,18 +37,18 @@ export function SongSlider(): JSX.Element {
         value={position}
         maximumValue={duration}
         minimumValue={0}
-        thumbTintColor="white"
-        minimumTrackTintColor="white"
-        maximumTrackTintColor="white"
+        thumbTintColor="#2ECC72"
+        minimumTrackTintColor="#2ECC72"
+        maximumTrackTintColor="#2ECC72"
         onSlidingComplete={handleSliderThumbComplete}
         onValueChange={handleSliderThumbChange}
       />
       <View style={styles.timeContainer}>
-        <Text style={styles.startTime}>
+        <Text>
           {formatDuration(isThumbChanging === true ? newPosition : position)}
         </Text>
         <Pressable onPress={handleShowTotalDurationPress}>
-          <Text style={styles.endTime}>
+          <Text>
             {formatDuration(
               duration -
                 (showTotalDuration === false
@@ -69,11 +69,5 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     paddingHorizontal: 16,
-  },
-  startTime: {
-    color: "white",
-  },
-  endTime: {
-    color: "white",
   },
 });
