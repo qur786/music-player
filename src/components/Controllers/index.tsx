@@ -64,7 +64,7 @@ export function Controllers(): JSX.Element {
   return (
     <View style={styles.container}>
       <Pressable>
-        <Icon name="share" size={20} color="#2ECC72" />
+        <Icon name="share" size={20} color="#E74292" />
       </Pressable>
       <View style={styles.playerContainer}>
         <Pressable onPress={handlePrevPress}>
@@ -78,7 +78,7 @@ export function Controllers(): JSX.Element {
                 : "play-circle"
             }
             size={60}
-            color="#2ECC72"
+            color="#E74292"
           />
         </Pressable>
         <Pressable onPress={handleNextPress}>
@@ -86,7 +86,7 @@ export function Controllers(): JSX.Element {
         </Pressable>
       </View>
       <Pressable onPress={handleRepeatModePress}>
-        <Icon name={RepeatModeIcons[repeatMode]} size={20} color="#2ECC72" />
+        <Icon name={RepeatModeIcons[repeatMode]} size={20} color="#E74292" />
       </Pressable>
     </View>
   );
