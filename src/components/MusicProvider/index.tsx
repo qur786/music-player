@@ -38,8 +38,14 @@ export function MusicProvider({ children }: PropsWithChildren): JSX.Element {
   const [isPlayerSetup, setIsPlayerSetup] = useState(false);
 
   useEffect(() => {
-    setupPlayer().then(setIsPlayerSetup).catch(console.log);
-    // TODO: notify user on setup failure
+    setupPlayer()
+      .then(setIsPlayerSetup)
+      .catch(() => {
+        Snackbar.show({
+          text: "Failed to setup player. Please re-start the app.",
+          duration: Snackbar.LENGTH_INDEFINITE,
+        });
+      });
   }, []); // Needs to setup player before any interaction with the player
 
   const requestRefetch: MusicContext["requestRefetch"] =
