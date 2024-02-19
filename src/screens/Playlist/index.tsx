@@ -1,6 +1,5 @@
 import { MusicPlaceholderImage } from "../../components/MusicProvider/music-placeholder";
 import type { PlaylistProps } from "../../routes";
-import type { PressableProps } from "react-native";
 import React from "react";
 import { Routes } from "../../routes";
 import type { Track } from "react-native-track-player";
@@ -18,11 +17,7 @@ import {
 } from "react-native";
 
 export function Playlist({ navigation }: PlaylistProps): JSX.Element {
-  const { requestRefetch, loading, tracks } = useMusicFiles();
-
-  const handleReload: PressableProps["onPress"] = async () => {
-    requestRefetch().catch(console.log);
-  };
+  const { loading, tracks } = useMusicFiles();
 
   const handleMusicItemClick = async (track: Track) => {
     await TrackPlayer.load(track);
@@ -32,12 +27,9 @@ export function Playlist({ navigation }: PlaylistProps): JSX.Element {
   };
 
   return (
-    <View>
-      <Pressable onPress={handleReload}>
-        <Text>Reload</Text>
-      </Pressable>
+    <View style={styles.main}>
       {loading ? (
-        <ActivityIndicator />
+        <ActivityIndicator size="large" />
       ) : (
         <FlatList
           data={tracks}
@@ -75,6 +67,7 @@ export function Playlist({ navigation }: PlaylistProps): JSX.Element {
 }
 
 const styles = StyleSheet.create({
+  main: { flex: 1, justifyContent: "center" },
   listContainer: {
     paddingVertical: 12,
     paddingHorizontal: 8,
