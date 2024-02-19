@@ -12,6 +12,7 @@ import {
   FlatList,
   Image,
   Pressable,
+  StyleSheet,
   Text,
   View,
 } from "react-native";
@@ -40,11 +41,12 @@ export function Playlist({ navigation }: PlaylistProps): JSX.Element {
       ) : (
         <FlatList
           data={tracks}
+          contentContainerStyle={styles.listContainer}
           renderItem={(song) => (
             <Pressable
               key={song.item.title}
               onPress={() => handleMusicItemClick(song.item)}
-              style={{ width: "100%", padding: 6 }}>
+              style={styles.listButton}>
               <View>
                 <Image
                   source={{
@@ -54,11 +56,11 @@ export function Playlist({ navigation }: PlaylistProps): JSX.Element {
                         ? song.item.artwork
                         : MusicPlaceholderImage,
                   }}
-                  style={{ width: 40, height: 40, objectFit: "cover" }}
+                  style={styles.listImage}
                 />
               </View>
               <View>
-                <Text>{song.item.title}</Text>
+                <Text style={styles.listTitle}>{song.item.title}</Text>
                 <Text>
                   Artist: {song.item.artist} | Duration:{" "}
                   {formatDuration(song.item?.duration ?? 0)}
@@ -71,3 +73,19 @@ export function Playlist({ navigation }: PlaylistProps): JSX.Element {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  listContainer: {
+    paddingVertical: 12,
+    paddingHorizontal: 8,
+    width: "95%",
+  },
+  listButton: {
+    padding: 6,
+    flex: 1,
+    flexDirection: "row",
+    gap: 16,
+  },
+  listImage: { width: 40, height: 40, objectFit: "cover" },
+  listTitle: { color: "#2C3335", fontSize: 16 },
+});
