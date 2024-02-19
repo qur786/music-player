@@ -29,7 +29,7 @@ export async function setupPlayer(): Promise<boolean> {
         Capability.SkipToPrevious,
         Capability.JumpForward,
         Capability.JumpBackward,
-      ]; // TODO: other capabilities are not supported via notification
+      ]; // other capabilities are not supported via notification
       await TrackPlayer.updateOptions({
         android: {
           appKilledPlaybackBehavior: AppKilledPlaybackBehavior.ContinuePlayback,

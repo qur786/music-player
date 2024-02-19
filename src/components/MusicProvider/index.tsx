@@ -1,4 +1,5 @@
 import type { PropsWithChildren } from "react";
+import Snackbar from "react-native-snackbar";
 import type { Track } from "react-native-track-player";
 import { setupPlayer } from "../../../track-player-service";
 import { Dirs, FileSystem } from "react-native-file-access";
@@ -95,7 +96,10 @@ export function MusicProvider({ children }: PropsWithChildren): JSX.Element {
             setTracks(output);
           }
         } else {
-          // TODO: notify user that user needs to allow permission to access music files.
+          Snackbar.show({
+            text: "Couldn't access music files due to permission denied.",
+            duration: Snackbar.LENGTH_LONG,
+          });
         }
         setLoading(false);
       }

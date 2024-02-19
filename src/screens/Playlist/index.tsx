@@ -2,6 +2,7 @@ import { MusicPlaceholderImage } from "../../components/MusicProvider/music-plac
 import type { PlaylistProps } from "../../routes";
 import React from "react";
 import { Routes } from "../../routes";
+import Snackbar from "react-native-snackbar";
 import type { Track } from "react-native-track-player";
 import TrackPlayer from "react-native-track-player";
 import { formatDuration } from "../../utils";
@@ -22,10 +23,16 @@ export function Playlist({ navigation }: PlaylistProps): JSX.Element {
   const { loading, tracks, requestRefetch } = useMusicFiles();
 
   const handleMusicItemClick = async (track: Track) => {
-    await TrackPlayer.load(track);
-    await TrackPlayer.play();
-    // TODO: add error handing
-    navigation.navigate(Routes.Home);
+    try {
+      await TrackPlayer.load(track);
+      await TrackPlayer.play();
+      navigation.navigate(Routes.Home);
+    } catch {
+      Snackbar.show({
+        text: "Error on loading music",
+        duration: Snackbar.LENGTH_LONG,
+      });
+    }
   };
 
   return (

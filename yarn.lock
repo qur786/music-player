@@ -5716,6 +5716,11 @@ react-native-screens@^3.29.0:
     react-freeze "^1.0.0"
     warn-once "^0.1.0"
 
+react-native-snackbar@^2.6.2:
+  version "2.6.2"
+  resolved "https://registry.yarnpkg.com/react-native-snackbar/-/react-native-snackbar-2.6.2.tgz#7c0d0d93bfb5822fb1f41f00d29383f522c02185"
+  integrity sha512-edAubZJiBowwQUXJV5oXbMqitQ9vw7JzWUCczeTPVo6lRa+FzsUjiCQBHdWBbCw/N8/Q7jgKg4juNXU/bXZdXg==
+
 react-native-track-player@^4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/react-native-track-player/-/react-native-track-player-4.0.1.tgz#df80c27290db610f92dc73d89ecae8e354acb28d"
