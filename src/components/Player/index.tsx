@@ -25,7 +25,7 @@ export function Player(): JSX.Element {
 
   useEffect(() => {
     TrackPlayer.getActiveTrack().then(setCurrentTrack).catch(console.log);
-  }, []);
+  }, []); // To seup the active track for the first time Player renders on the screen
 
   return (
     <View style={styles.container}>
@@ -38,6 +38,6 @@ export function Player(): JSX.Element {
 
 const styles = StyleSheet.create({
   container: {
-    height: "100%",
+    height: "80%",
   },
 });
