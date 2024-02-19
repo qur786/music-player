@@ -1,3 +1,4 @@
+import { MusicPlaceholderImage } from "./music-placeholder";
 import type { Track } from "react-native-track-player";
 import TrackPlayer from "react-native-track-player";
 import type { getAll } from "react-native-get-music-files";
@@ -24,7 +25,9 @@ export function convertMusicFileToTrack(musicFiles: MusicFile): Track[] {
       duration: duration / 1000,
       artist,
       artwork:
-        typeof cover === "string" && cover.length > 0 ? cover : undefined,
+        typeof cover === "string" && cover.length > 0
+          ? cover
+          : MusicPlaceholderImage,
     })
   );
 
