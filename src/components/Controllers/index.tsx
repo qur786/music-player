@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import Icon from "react-native-vector-icons/MaterialIcons";
 import type { PressableProps } from "react-native";
 import { Pressable, StyleSheet, View } from "react-native";
@@ -32,6 +33,14 @@ export function Controllers(): JSX.Element {
     await TrackPlayer.skipToNext();
   };
 
+  const handleJumpForwardPress: PressableProps["onPress"] = async () => {
+    await TrackPlayer.seekBy(10);
+  };
+
+  const handleJumpBackwardPress: PressableProps["onPress"] = async () => {
+    await TrackPlayer.seekBy(-10);
+  };
+
   const handleTogglePlayPause: PressableProps["onPress"] = async () => {
     const currentTrack = await TrackPlayer.getActiveTrack();
 
@@ -63,10 +72,10 @@ export function Controllers(): JSX.Element {
 
   return (
     <View style={styles.container}>
-      <Pressable>
-        <Icon name="share" size={20} color="#E74292" />
-      </Pressable>
       <View style={styles.playerContainer}>
+        <Pressable onPress={handleJumpBackwardPress}>
+          <Icon name="replay-10" size={30} color="#25CCF7" />
+        </Pressable>
         <Pressable onPress={handlePrevPress}>
           <Icon name="skip-previous" size={40} color="black" />
         </Pressable>
@@ -84,10 +93,14 @@ export function Controllers(): JSX.Element {
         <Pressable onPress={handleNextPress}>
           <Icon name="skip-next" size={40} color="black" />
         </Pressable>
+        <Pressable onPress={handleJumpForwardPress}>
+          <Icon name="forward-10" size={30} color="#25CCF7" />
+        </Pressable>
       </View>
+      {/* TODO: add it back
       <Pressable onPress={handleRepeatModePress}>
         <Icon name={RepeatModeIcons[repeatMode]} size={20} color="#E74292" />
-      </Pressable>
+      </Pressable> */}
     </View>
   );
 }
@@ -102,6 +115,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    gap: 10,
+    gap: 12,
   },
 });
