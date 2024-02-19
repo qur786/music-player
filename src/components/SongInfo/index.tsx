@@ -1,3 +1,4 @@
+import { MusicPlaceholderImage } from "../MusicProvider/music-placeholder";
 import React from "react";
 import type { Track } from "react-native-track-player";
 import { Dimensions, Image, StyleSheet, Text, View } from "react-native";
@@ -13,7 +14,10 @@ export function SongInfo({ song }: SongInfoProps): JSX.Element {
     <View style={styles.container}>
       <Image
         source={{
-          uri: "https://www.wmhbradio.org/wp-content/uploads/2016/07/music-placeholder.png", // TODO: update it with song artwork
+          uri:
+            song && typeof song.artwork === "string" && song.artwork.length > 0
+              ? song.artwork
+              : MusicPlaceholderImage,
         }}
         style={styles.artWork}
       />
