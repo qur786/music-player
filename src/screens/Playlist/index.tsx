@@ -1,4 +1,4 @@
-import MusiclPlaceholderImage from "./music-placeholder.jpg";
+import { MusicPlaceholderImage } from "../../components/MusicProvider/music-placeholder";
 import type { PlaylistProps } from "../../routes";
 import type { PressableProps } from "react-native";
 import React from "react";
@@ -47,15 +47,13 @@ export function Playlist({ navigation }: PlaylistProps): JSX.Element {
               style={{ width: "100%", padding: 6 }}>
               <View>
                 <Image
-                  source={
-                    song.item.artwork === "" ||
-                    song.item.artwork === undefined ||
-                    song.item.artwork === null
-                      ? MusiclPlaceholderImage
-                      : {
-                          uri: song.item.artwork,
-                        }
-                  }
+                  source={{
+                    uri:
+                      typeof song.item.artwork === "string" &&
+                      song.item.artwork.length > 0
+                        ? song.item.artwork
+                        : MusicPlaceholderImage,
+                  }}
                   style={{ width: 40, height: 40, objectFit: "cover" }}
                 />
               </View>
