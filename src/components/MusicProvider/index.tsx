@@ -90,15 +90,17 @@ export function MusicProvider({ children }: PropsWithChildren): JSX.Element {
 
           if (typeof songsResults === "string") {
             console.log(songsResults);
-            // TODO: notify user that could not find any music files
           } else {
-            // TODO: use try catch
             output = convertMusicFileToTrack(songsResults);
-            await mergeQueueTracks(output);
-            await FileSystem.writeFile(
-              Dirs.DocumentDir + MUSIC_FILE_PATH,
-              JSON.stringify(output)
-            );
+            try {
+              await mergeQueueTracks(output);
+              await FileSystem.writeFile(
+                Dirs.DocumentDir + MUSIC_FILE_PATH,
+                JSON.stringify(output)
+              );
+            } catch (error) {
+              console.log(error);
+            }
             setTracks(output);
           }
         } else {
