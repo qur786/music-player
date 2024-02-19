@@ -55,15 +55,21 @@ export async function addTracks(tracks: Track[]): Promise<void> {
 
 export const trackPlayerPlaybackService: ServiceHandler = async () => {
   TrackPlayer.addEventListener(Event.RemoteNext, () => {
-    TrackPlayer.skipToNext();
+    TrackPlayer.skipToNext().catch(console.log);
   });
   TrackPlayer.addEventListener(Event.RemotePrevious, () => {
-    TrackPlayer.skipToPrevious();
-  });
-  TrackPlayer.addEventListener(Event.RemotePause, () => {
-    TrackPlayer.play();
+    TrackPlayer.skipToPrevious().catch(console.log);
   });
   TrackPlayer.addEventListener(Event.RemotePlay, () => {
-    TrackPlayer.pause();
+    TrackPlayer.play().catch(console.log);
+  });
+  TrackPlayer.addEventListener(Event.RemotePause, () => {
+    TrackPlayer.pause().catch(console.log);
+  });
+  TrackPlayer.addEventListener(Event.RemoteJumpForward, () => {
+    TrackPlayer.seekBy(10).catch(console.log);
+  });
+  TrackPlayer.addEventListener(Event.RemoteJumpBackward, () => {
+    TrackPlayer.seekBy(-10).catch(console.log);
   });
 };
