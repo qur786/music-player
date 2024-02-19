@@ -1,4 +1,5 @@
 import type { PropsWithChildren } from "react";
+import type { Track } from "react-native-track-player";
 import { Dirs, FileSystem } from "react-native-file-access";
 import { PermissionsAndroid, Platform } from "react-native";
 import React, {
@@ -13,34 +14,34 @@ import {
   SortSongOrder,
   getAll,
 } from "react-native-get-music-files";
-
-export type MusicFile = Exclude<Awaited<ReturnType<typeof getAll>>, string>;
+import { convertMusicFileToTrack, mergeQueueTracks } from "./tracks";
 
 interface MusicContext {
-  musicFiles: MusicFile;
-  requestRefetch: () => Promise<MusicFile>;
+  tracks: Track[];
+  requestRefetch: () => Promise<Track[]>;
   loading: boolean;
 }
 
 const MUSIC_FILE_PATH = "/music-file-path.json";
 
 const MusicContext = createContext<MusicContext>({
-  musicFiles: [],
+  tracks: [],
   requestRefetch: async () => [],
   loading: false,
 });
 
 export function MusicProvider({ children }: PropsWithChildren): JSX.Element {
-  const [musicFiles, setMusicFiles] = useState<MusicFile>([]);
+  const [tracks, setTracks] = useState<Track[]>([]);
   const [loading, setLoading] = useState(false);
 
   const requestRefetch: MusicContext["requestRefetch"] =
     useCallback(async () => {
       setLoading(true);
 
-      let output: MusicFile = [];
+      let output: Track[] = [];
       let isMusicFilesReadPermissions = false;
-      let isExternalStorageReadPermissions = false;
+      let isExternalStorageReadPermissions = false; // TODO: remove this permission
+
       if (Platform.OS === "android") {
         isMusicFilesReadPermissions = await PermissionsAndroid.check(
           "android.permission.READ_MEDIA_AUDIO"
@@ -96,12 +97,13 @@ export function MusicProvider({ children }: PropsWithChildren): JSX.Element {
           // TODO: notify user that could not find any music files
         } else {
           // TODO: use try catch
-          output = songsResults;
+          output = convertMusicFileToTrack(songsResults);
+          await mergeQueueTracks(output);
           await FileSystem.writeFile(
             Dirs.DocumentDir + MUSIC_FILE_PATH,
-            JSON.stringify(songsResults)
+            JSON.stringify(output)
           );
-          setMusicFiles(songsResults);
+          setTracks(output);
         }
       } else {
         // TODO: notify user that user needs to allow permission to access music files.
@@ -113,13 +115,15 @@ export function MusicProvider({ children }: PropsWithChildren): JSX.Element {
   useEffect(() => {
     FileSystem.readFile(Dirs.DocumentDir + MUSIC_FILE_PATH)
       .then((data) => {
-        setMusicFiles(JSON.parse(data) as MusicFile);
+        const parsedTracks = JSON.parse(data) as Track[];
+        setTracks(parsedTracks);
+        mergeQueueTracks(parsedTracks);
       })
       .catch(console.log);
   }, []);
 
   return (
-    <MusicContext.Provider value={{ requestRefetch, musicFiles, loading }}>
+    <MusicContext.Provider value={{ requestRefetch, tracks, loading }}>
       {children}
     </MusicContext.Provider>
   );
