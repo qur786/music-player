@@ -69,7 +69,9 @@ export function Playlist({ navigation }: PlaylistProps): JSX.Element {
                 />
               </View>
               <View>
-                <Text style={styles.listTitle}>{song.item.title}</Text>
+                <Text style={styles.listTitle} numberOfLines={2}>
+                  {song.item.title}
+                </Text>
                 <Text>
                   Artist: {song.item.artist} | Duration:{" "}
                   {formatDuration(song.item?.duration ?? 0)}
@@ -86,15 +88,17 @@ export function Playlist({ navigation }: PlaylistProps): JSX.Element {
 const styles = StyleSheet.create({
   main: { flex: 1, justifyContent: "center" },
   listContainer: {
-    paddingVertical: 12,
+    paddingVertical: 4,
     paddingHorizontal: 8,
-    width: "95%",
+    // width: "95%",
   },
   listButton: {
-    padding: 6,
+    padding: 12,
     flex: 1,
     flexDirection: "row",
+    alignItems: "center",
     gap: 16,
+    height: 76,
   },
   listImage: { width: 40, height: 40, objectFit: "cover" },
   listTitle: { color: "#2C3335", fontSize: 16 },
