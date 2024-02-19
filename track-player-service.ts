@@ -1,10 +1,13 @@
 import { Capability } from "react-native-track-player";
+import { Dirs, FileSystem } from "react-native-file-access";
 import type { ServiceHandler, Track } from "react-native-track-player";
 import TrackPlayer, {
   AppKilledPlaybackBehavior,
   Event,
   RepeatMode,
 } from "react-native-track-player";
+
+export const CURRENT_TRACK_File_PATH = "/current-track-file-path.json";
 
 /**
  * A function to setup player. This needs to be done once for the app.
@@ -35,6 +38,7 @@ export async function setupPlayer(): Promise<boolean> {
         capabilities,
         notificationCapabilities: capabilities,
         compactCapabilities: capabilities,
+        progressUpdateEventInterval: 1, // Needs to specify to trigger progress update event in playback service. Ref: https://rntp.dev/docs/api/events#playbackprogressupdated
       });
     } catch (err) {
       console.log(err);
@@ -71,5 +75,20 @@ export const trackPlayerPlaybackService: ServiceHandler = async () => {
   });
   TrackPlayer.addEventListener(Event.RemoteJumpBackward, () => {
     TrackPlayer.seekBy(-10).catch(console.log);
+  });
+  TrackPlayer.addEventListener(Event.PlaybackProgressUpdated, async (event) => {
+    console.log(event.position);
+    try {
+      const currentTrack = await TrackPlayer.getActiveTrack();
+      const currentTime = event.position;
+      if (currentTrack) {
+        await FileSystem.writeFile(
+          Dirs.DocumentDir + CURRENT_TRACK_File_PATH,
+          JSON.stringify({ currentTrack, currentTime })
+        );
+      }
+    } catch (error) {
+      console.log(`Error on saving current track: ${error}`);
+    }
   });
 };
