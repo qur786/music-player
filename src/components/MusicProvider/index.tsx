@@ -49,15 +49,10 @@ export function MusicProvider({ children }: PropsWithChildren): JSX.Element {
         setLoading(true);
 
         let isMusicFilesReadPermissions = false;
-        let isExternalStorageReadPermissions = false; // TODO: remove this permission
 
         if (Platform.OS === "android") {
           isMusicFilesReadPermissions = await PermissionsAndroid.check(
             "android.permission.READ_MEDIA_AUDIO"
-          );
-
-          isExternalStorageReadPermissions = await PermissionsAndroid.check(
-            "android.permission.READ_EXTERNAL_STORAGE"
           );
 
           if (isMusicFilesReadPermissions === false) {
@@ -73,21 +68,6 @@ export function MusicProvider({ children }: PropsWithChildren): JSX.Element {
             );
 
             isMusicFilesReadPermissions =
-              result === PermissionsAndroid.RESULTS.GRANTED;
-          }
-
-          if (isExternalStorageReadPermissions === false) {
-            const result = await PermissionsAndroid.request(
-              "android.permission.READ_EXTERNAL_STORAGE",
-              {
-                title: "Music player external storage permission.",
-                message: "App needs to access local files.",
-                buttonPositive: "Ask me later",
-                buttonNegative: "Cancel",
-                buttonNeutral: "Ok",
-              }
-            );
-            isExternalStorageReadPermissions =
               result === PermissionsAndroid.RESULTS.GRANTED;
           }
         }
