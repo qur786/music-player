@@ -1,6 +1,10 @@
 import MusiclPlaceholderImage from "./music-placeholder.jpg";
+import type { PlaylistProps } from "../../routes";
 import type { PressableProps } from "react-native";
 import React from "react";
+import { Routes } from "../../routes";
+import type { Track } from "react-native-track-player";
+import TrackPlayer from "react-native-track-player";
 import { formatDuration } from "../../utils";
 import { useMusicFiles } from "../../components/MusicProvider";
 import {
@@ -12,11 +16,17 @@ import {
   View,
 } from "react-native";
 
-export function Playlist(): JSX.Element {
-  const { requestRefetch, loading, musicFiles } = useMusicFiles();
+export function Playlist({ navigation }: PlaylistProps): JSX.Element {
+  const { requestRefetch, loading, tracks } = useMusicFiles();
 
   const handleReload: PressableProps["onPress"] = async () => {
     requestRefetch().catch(console.log);
+  };
+
+  const handleMusicItemClick = async (track: Track) => {
+    await TrackPlayer.load(track);
+    await TrackPlayer.play();
+    navigation.navigate(Routes.Home);
   };
 
   return (
@@ -28,18 +38,21 @@ export function Playlist(): JSX.Element {
         <ActivityIndicator />
       ) : (
         <FlatList
-          data={musicFiles}
+          data={tracks}
           renderItem={(song) => (
-            <View key={song.item.title} style={{ width: "100%", padding: 6 }}>
+            <Pressable
+              key={song.item.title}
+              onPress={() => handleMusicItemClick(song.item)}
+              style={{ width: "100%", padding: 6 }}>
               <View>
                 <Image
                   source={
-                    song.item.cover === "" ||
-                    song.item.cover === undefined ||
-                    song.item.cover === null
+                    song.item.artwork === "" ||
+                    song.item.artwork === undefined ||
+                    song.item.artwork === null
                       ? MusiclPlaceholderImage
                       : {
-                          uri: song.item.cover,
+                          uri: song.item.artwork,
                         }
                   }
                   style={{ width: 40, height: 40, objectFit: "cover" }}
@@ -49,10 +62,10 @@ export function Playlist(): JSX.Element {
                 <Text>{song.item.title}</Text>
                 <Text>
                   Artist: {song.item.artist} | Duration:{" "}
-                  {formatDuration(song.item.duration / 1000)}
+                  {formatDuration(song.item?.duration ?? 0)}
                 </Text>
               </View>
-            </View>
+            </Pressable>
           )}
         />
       )}
