@@ -1,5 +1,10 @@
+import { Capability } from "react-native-track-player";
 import type { ServiceHandler, Track } from "react-native-track-player";
-import TrackPlayer, { Event, RepeatMode } from "react-native-track-player";
+import TrackPlayer, {
+  AppKilledPlaybackBehavior,
+  Event,
+  RepeatMode,
+} from "react-native-track-player";
 
 /**
  * A function to setup player. This needs to be done once for the app.
@@ -11,6 +16,29 @@ export async function setupPlayer(): Promise<boolean> {
     isSetup = true;
   } catch {
     await TrackPlayer.setupPlayer();
+    try {
+      let capabilities = [
+        Capability.Play,
+        Capability.Pause,
+        Capability.Stop,
+        Capability.SeekTo,
+        Capability.SkipToNext,
+        Capability.SkipToPrevious,
+        Capability.JumpForward,
+        Capability.JumpBackward,
+      ]; // TODO: other capabilities are not supported via notification
+      await TrackPlayer.updateOptions({
+        android: {
+          appKilledPlaybackBehavior: AppKilledPlaybackBehavior.ContinuePlayback,
+        },
+        alwaysPauseOnInterruption: false,
+        capabilities,
+        notificationCapabilities: capabilities,
+        compactCapabilities: capabilities,
+      });
+    } catch (err) {
+      console.log(err);
+    }
     isSetup = true;
   }
 
