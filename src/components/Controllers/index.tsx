@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import Icon from "react-native-vector-icons/MaterialIcons";
 import type { PressableProps } from "react-native";
 import { Pressable, StyleSheet, View } from "react-native";
@@ -97,24 +96,30 @@ export function Controllers(): JSX.Element {
           <Icon name="forward-10" size={30} color="#25CCF7" />
         </Pressable>
       </View>
-      {/* TODO: add it back
-      <Pressable onPress={handleRepeatModePress}>
-        <Icon name={RepeatModeIcons[repeatMode]} size={20} color="#E74292" />
-      </Pressable> */}
+      <View style={styles.shareContainer}>
+        <Pressable>
+          <Icon name="share" size={26} color="#E74292" />
+        </Pressable>
+        <Pressable onPress={handleRepeatModePress}>
+          <Icon name={RepeatModeIcons[repeatMode]} size={26} color="#E74292" />
+        </Pressable>
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-around",
+    gap: 8,
   },
   playerContainer: {
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
     gap: 16,
+  },
+  shareContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
 });

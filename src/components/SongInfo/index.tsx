@@ -31,7 +31,7 @@ export function SongInfo({ song }: SongInfoProps): JSX.Element {
 
 const styles = StyleSheet.create({
   container: {
-    height: "70%",
+    height: "65%",
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "space-around",
