@@ -94,7 +94,7 @@ export function MusicProvider({ children }: PropsWithChildren): JSX.Element {
             try {
               await setQueueUninterrupted(output);
               await FileSystem.writeFile(
-                Dirs.DocumentDir + FilePaths.MUSIC_FILE_PATH,
+                Dirs.DocumentDir + FilePaths.musicFilePath,
                 JSON.stringify(output)
               );
             } catch (error) {
@@ -115,7 +115,7 @@ export function MusicProvider({ children }: PropsWithChildren): JSX.Element {
 
   useEffect(() => {
     if (isPlayerSetup) {
-      FileSystem.readFile(Dirs.DocumentDir + FilePaths.MUSIC_FILE_PATH)
+      FileSystem.readFile(Dirs.DocumentDir + FilePaths.musicFilePath)
         .then((data) => {
           const parsedTracks = JSON.parse(data) as Track[];
           setTracks(parsedTracks);

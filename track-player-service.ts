@@ -76,7 +76,7 @@ export const trackPlayerPlaybackService: ServiceHandler = async () => {
       const currentTime = event.position;
       if (currentTrack) {
         await FileSystem.writeFile(
-          Dirs.DocumentDir + FilePaths.CURRENT_TRACK_File_PATH,
+          Dirs.DocumentDir + FilePaths.currentMusicFilePath,
           JSON.stringify({ currentTrack, currentTime })
         );
       }
