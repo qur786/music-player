@@ -79,6 +79,9 @@ export const trackPlayerPlaybackService: ServiceHandler = async () => {
   TrackPlayer.addEventListener(Event.RemoteJumpBackward, () => {
     TrackPlayer.seekBy(-10).catch(console.log);
   });
+  TrackPlayer.addEventListener(Event.RemoteSeek, (event) => {
+    TrackPlayer.seekTo(event.position);
+  });
   TrackPlayer.addEventListener(Event.PlaybackProgressUpdated, async (event) => {
     try {
       const currentTrack = await TrackPlayer.getActiveTrack();
