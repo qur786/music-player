@@ -1,6 +1,8 @@
 import type { PropsWithChildren } from "react";
 import Snackbar from "react-native-snackbar";
 import type { Track } from "react-native-track-player";
+import TrackPlayer from "react-native-track-player";
+import { convertMusicFileToTrack } from "./tracks";
 import { setupPlayer } from "../../../track-player-service";
 import { Dirs, FileSystem } from "react-native-file-access";
 import { PermissionsAndroid, Platform } from "react-native";
@@ -16,7 +18,6 @@ import {
   SortSongOrder,
   getAll,
 } from "react-native-get-music-files";
-import { convertMusicFileToTrack, mergeQueueTracks } from "./tracks";
 
 interface MusicContext {
   tracks: Track[];
@@ -93,7 +94,7 @@ export function MusicProvider({ children }: PropsWithChildren): JSX.Element {
           } else {
             output = convertMusicFileToTrack(songsResults);
             try {
-              await mergeQueueTracks(output);
+              await TrackPlayer.setQueue(output);
               await FileSystem.writeFile(
                 Dirs.DocumentDir + MUSIC_FILE_PATH,
                 JSON.stringify(output)
@@ -120,7 +121,7 @@ export function MusicProvider({ children }: PropsWithChildren): JSX.Element {
         .then((data) => {
           const parsedTracks = JSON.parse(data) as Track[];
           setTracks(parsedTracks);
-          mergeQueueTracks(parsedTracks);
+          TrackPlayer.setQueue(parsedTracks).catch(console.log);
         })
         .catch(console.log);
     }
