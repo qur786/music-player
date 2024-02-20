@@ -3,7 +3,6 @@ import type { PlaylistProps } from "../../routes";
 import React from "react";
 import { Routes } from "../../routes";
 import Snackbar from "react-native-snackbar";
-import type { Track } from "react-native-track-player";
 import TrackPlayer from "react-native-track-player";
 import { formatDuration } from "../../utils";
 import { useMusicFiles } from "../../components/MusicProvider";
@@ -22,9 +21,9 @@ import {
 export function Playlist({ navigation }: PlaylistProps): JSX.Element {
   const { loading, tracks, requestRefetch } = useMusicFiles();
 
-  const handleMusicItemClick = async (track: Track) => {
+  const handleMusicItemClick = async (index: number) => {
     try {
-      await TrackPlayer.load(track);
+      await TrackPlayer.skip(index); // To load music from the queue
       await TrackPlayer.play();
       navigation.navigate(Routes.Home);
     } catch {
@@ -61,7 +60,7 @@ export function Playlist({ navigation }: PlaylistProps): JSX.Element {
           renderItem={(song) => (
             <Pressable
               key={song.item.title}
-              onPress={() => handleMusicItemClick(song.item)}
+              onPress={() => handleMusicItemClick(song.index)}
               style={styles.listButton}>
               <View>
                 <Image
