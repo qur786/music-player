@@ -14,12 +14,17 @@ export default function App(): JSX.Element {
     <MusicProvider>
       <NavigationContainer>
         <Navigator
-          initialRouteName={Routes.Playlist}
+          initialRouteName={Routes.Home}
           screenOptions={{
             tabBarActiveTintColor: "#E74292",
             tabBarHideOnKeyboard: true,
             headerTitleAlign: "center",
-            headerTitle: "Music Player",
+            headerTitle: "Rhythmiq",
+            headerTitleStyle: {
+              fontFamily: "cursive",
+              fontSize: 24,
+              color: "#E74292",
+            },
           }}>
           <Screen
             name={Routes.Home}

@@ -57,6 +57,7 @@ export function Playlist({ navigation }: PlaylistProps): JSX.Element {
           refreshControl={
             <RefreshControl refreshing={loading} onRefresh={requestRefetch} />
           }
+          keyExtractor={({ url }) => url}
           renderItem={(song) => (
             <Pressable
               key={song.item.title}
