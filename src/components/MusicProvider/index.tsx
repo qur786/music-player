@@ -1,3 +1,4 @@
+import { FilePaths } from "../../utils";
 import type { PropsWithChildren } from "react";
 import Snackbar from "react-native-snackbar";
 import type { Track } from "react-native-track-player";
@@ -23,8 +24,6 @@ interface MusicContext {
   requestRefetch: () => Promise<Track[]>;
   loading: boolean;
 }
-
-const MUSIC_FILE_PATH = "/music-file-path.json";
 
 const MusicContext = createContext<MusicContext>({
   tracks: [],
@@ -95,7 +94,7 @@ export function MusicProvider({ children }: PropsWithChildren): JSX.Element {
             try {
               await setQueueUninterrupted(output);
               await FileSystem.writeFile(
-                Dirs.DocumentDir + MUSIC_FILE_PATH,
+                Dirs.DocumentDir + FilePaths.MUSIC_FILE_PATH,
                 JSON.stringify(output)
               );
             } catch (error) {
@@ -116,7 +115,7 @@ export function MusicProvider({ children }: PropsWithChildren): JSX.Element {
 
   useEffect(() => {
     if (isPlayerSetup) {
-      FileSystem.readFile(Dirs.DocumentDir + MUSIC_FILE_PATH)
+      FileSystem.readFile(Dirs.DocumentDir + FilePaths.MUSIC_FILE_PATH)
         .then((data) => {
           const parsedTracks = JSON.parse(data) as Track[];
           setTracks(parsedTracks);

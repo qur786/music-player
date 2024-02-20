@@ -1,4 +1,5 @@
 import { Capability } from "react-native-track-player";
+import { FilePaths } from "./src/utils";
 import { Dirs, FileSystem } from "react-native-file-access";
 import type { ServiceHandler, Track } from "react-native-track-player";
 import TrackPlayer, {
@@ -6,8 +7,6 @@ import TrackPlayer, {
   Event,
   RepeatMode,
 } from "react-native-track-player";
-
-export const CURRENT_TRACK_File_PATH = "/current-track-file-path.json";
 
 /**
  * A function to setup player. This needs to be done once for the app.
@@ -86,7 +85,7 @@ export const trackPlayerPlaybackService: ServiceHandler = async () => {
       const currentTime = event.position;
       if (currentTrack) {
         await FileSystem.writeFile(
-          Dirs.DocumentDir + CURRENT_TRACK_File_PATH,
+          Dirs.DocumentDir + FilePaths.CURRENT_TRACK_File_PATH,
           JSON.stringify({ currentTrack, currentTime })
         );
       }

@@ -8,3 +8,8 @@ export function formatDuration(seconds: number): string {
   const min = Math.floor(totalMin % 60);
   return `${hr === 0 ? "" : `${hr}:`}${min}:${sec <= 9 ? `0${sec}` : sec}`;
 }
+
+export const FilePaths = {
+  MUSIC_FILE_PATH: "/music-file-path.json",
+  CURRENT_TRACK_File_PATH: "/current-track-file-path.json",
+} as const;
