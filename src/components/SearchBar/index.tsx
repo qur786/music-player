@@ -12,6 +12,9 @@ export function SearchBar({
   searchText,
   setSearchText,
 }: SearchBarProps): JSX.Element {
+  const handleClearSearchText = () => {
+    setSearchText("");
+  };
   return (
     <View style={styles.container}>
       <MaterialIcon name="search" size={26} color="gray" />
@@ -24,10 +27,8 @@ export function SearchBar({
       <MaterialIcon
         name="close"
         size={26}
-        color="green"
-        onPress={() => {
-          setSearchText("");
-        }}
+        color="gray"
+        onPress={handleClearSearchText}
       />
     </View>
   );
