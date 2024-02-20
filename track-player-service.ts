@@ -1,11 +1,10 @@
 import { Capability } from "react-native-track-player";
 import { FilePaths } from "./src/utils";
+import type { ServiceHandler } from "react-native-track-player";
 import { Dirs, FileSystem } from "react-native-file-access";
-import type { ServiceHandler, Track } from "react-native-track-player";
 import TrackPlayer, {
   AppKilledPlaybackBehavior,
   Event,
-  RepeatMode,
 } from "react-native-track-player";
 
 /**
@@ -47,14 +46,6 @@ export async function setupPlayer(): Promise<boolean> {
   }
 
   return isSetup;
-}
-
-/**
- * A function to add tracks to the player. Additionaly, it adds repeat mode.
- */
-export async function addTracks(tracks: Track[]): Promise<void> {
-  await TrackPlayer.add(tracks);
-  await TrackPlayer.setRepeatMode(RepeatMode.Queue);
 }
 
 export const trackPlayerPlaybackService: ServiceHandler = async () => {
