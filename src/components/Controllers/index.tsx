@@ -45,10 +45,7 @@ export function Controllers(): JSX.Element {
     const currentTrack = await TrackPlayer.getActiveTrack();
 
     if (currentTrack) {
-      if (
-        playbackState.state === State.Paused ||
-        playbackState.state === State.Ready
-      ) {
+      if (playbackState.state !== State.Playing) {
         await TrackPlayer.play();
       } else {
         await TrackPlayer.pause();
