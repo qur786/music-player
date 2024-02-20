@@ -9,6 +9,7 @@ import { useMusicFiles } from "../../components/MusicProvider";
 import {
   ActivityIndicator,
   Button,
+  Dimensions,
   FlatList,
   Image,
   Pressable,
@@ -108,6 +109,8 @@ export function Playlist({ navigation }: PlaylistProps): JSX.Element {
   );
 }
 
+const width = Dimensions.get("window").width;
+
 const styles = StyleSheet.create({
   main: { flex: 1, justifyContent: "center" },
   listContainer: {
@@ -123,7 +126,7 @@ const styles = StyleSheet.create({
     height: 76,
   },
   listImage: { width: 40, height: 40, objectFit: "cover" },
-  listTitle: { color: "#2C3335", fontSize: 16 },
+  listTitle: { color: "#2C3335", fontSize: 16, width: width - 90 },
   noSongContainer: {
     flex: 1,
     justifyContent: "center",
