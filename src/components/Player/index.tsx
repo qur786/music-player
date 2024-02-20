@@ -1,35 +1,13 @@
 import { Controllers } from "../Controllers";
+import React from "react";
 import { SongInfo } from "../SongInfo";
 import { SongSlider } from "../SongSlider";
-import React, { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
-import TrackPlayer, {
-  Event,
-  type Track,
-  useTrackPlayerEvents,
-} from "react-native-track-player";
 
 export function Player(): JSX.Element {
-  const [currentTrack, setCurrentTrack] = useState<Track>();
-
-  useTrackPlayerEvents([Event.PlaybackActiveTrackChanged], async (event) => {
-    switch (event.type) {
-      case Event.PlaybackActiveTrackChanged:
-        const newTrack = await TrackPlayer.getTrack(event.index ?? 0);
-        setCurrentTrack(newTrack);
-        break;
-      default:
-        break;
-    }
-  });
-
-  useEffect(() => {
-    TrackPlayer.getActiveTrack().then(setCurrentTrack).catch(console.log);
-  }, []); // To seup the active track for the first time Player renders on the screen
-
   return (
     <View style={styles.container}>
-      <SongInfo song={currentTrack} />
+      <SongInfo />
       <SongSlider />
       <Controllers />
     </View>

@@ -1,15 +1,12 @@
 import { MusicPlaceholderImage } from "../MusicProvider/music-placeholder";
 import React from "react";
-import type { Track } from "react-native-track-player";
+import { useActiveTrack } from "react-native-track-player";
 import { Dimensions, Image, StyleSheet, Text, View } from "react-native";
-
-interface SongInfoProps {
-  song: Track | null | undefined;
-}
 
 const { width } = Dimensions.get("window");
 
-export function SongInfo({ song }: SongInfoProps): JSX.Element {
+export function SongInfo(): JSX.Element {
+  const song = useActiveTrack();
   return (
     <View style={styles.container}>
       <Image
