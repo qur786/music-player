@@ -1,7 +1,7 @@
 import { Capability } from "react-native-track-player";
-import { FilePaths } from "./src/utils";
 import type { ServiceHandler } from "react-native-track-player";
 import { Dirs, FileSystem } from "react-native-file-access";
+import { FilePaths, JumpInterval } from "./src/utils";
 import TrackPlayer, {
   AppKilledPlaybackBehavior,
   Event,
@@ -62,10 +62,10 @@ export const trackPlayerPlaybackService: ServiceHandler = async () => {
     TrackPlayer.pause().catch(console.log);
   });
   TrackPlayer.addEventListener(Event.RemoteJumpForward, () => {
-    TrackPlayer.seekBy(10).catch(console.log);
+    TrackPlayer.seekBy(JumpInterval.forward).catch(console.log);
   });
   TrackPlayer.addEventListener(Event.RemoteJumpBackward, () => {
-    TrackPlayer.seekBy(-10).catch(console.log);
+    TrackPlayer.seekBy(JumpInterval.forward).catch(console.log);
   });
   TrackPlayer.addEventListener(Event.RemoteSeek, (event) => {
     TrackPlayer.seekTo(event.position);

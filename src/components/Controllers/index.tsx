@@ -1,4 +1,5 @@
 import Icon from "react-native-vector-icons/MaterialIcons";
+import { JumpInterval } from "../../utils";
 import type { PressableProps } from "react-native";
 import Snackbar from "react-native-snackbar";
 import { Pressable, StyleSheet, View } from "react-native";
@@ -34,11 +35,11 @@ export function Controllers(): JSX.Element {
   };
 
   const handleJumpForwardPress: PressableProps["onPress"] = async () => {
-    await TrackPlayer.seekBy(10);
+    await TrackPlayer.seekBy(JumpInterval.forward);
   };
 
   const handleJumpBackwardPress: PressableProps["onPress"] = async () => {
-    await TrackPlayer.seekBy(-10);
+    await TrackPlayer.seekBy(JumpInterval.backward);
   };
 
   const handleTogglePlayPause: PressableProps["onPress"] = async () => {

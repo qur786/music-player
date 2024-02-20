@@ -10,6 +10,11 @@ export function formatDuration(seconds: number): string {
 }
 
 export const FilePaths = {
-  MUSIC_FILE_PATH: "/music-file-path.json",
-  CURRENT_TRACK_File_PATH: "/current-track-file-path.json",
+  musicFilePath: "/music-file-path.json",
+  currentMusicFilePath: "/current-track-file-path.json",
+} as const;
+
+export const JumpInterval = {
+  forward: 10,
+  backward: -10,
 } as const;
