@@ -1,7 +1,7 @@
 import MaterialIcon from "react-native-vector-icons/MaterialIcons";
 import React from "react";
+import { Dimensions, StyleSheet, TextInput, View } from "react-native";
 import type { Dispatch, SetStateAction } from "react";
-import { StyleSheet, TextInput, View } from "react-native";
 
 interface SearchBarProps {
   searchText: string;
@@ -34,6 +34,8 @@ export function SearchBar({
   );
 }
 
+const width = Dimensions.get("window").width;
+
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
@@ -45,7 +47,7 @@ const styles = StyleSheet.create({
     borderColor: "#CCCCCC",
   },
   input: {
-    flexGrow: 2,
+    flexBasis: width - 90,
     overflow: "hidden",
   },
 });
