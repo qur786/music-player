@@ -1,7 +1,7 @@
 import { MusicPlaceholderImage } from "../../components/MusicProvider/music-placeholder";
 import type { PlaylistProps } from "../../routes";
-import React from "react";
 import { Routes } from "../../routes";
+import { SearchBar } from "../../components/SearchBar";
 import Snackbar from "react-native-snackbar";
 import TrackPlayer from "react-native-track-player";
 import { formatDuration } from "../../utils";
@@ -17,9 +17,11 @@ import {
   Text,
   View,
 } from "react-native";
+import React, { useState } from "react";
 
 export function Playlist({ navigation }: PlaylistProps): JSX.Element {
   const { loading, tracks, requestRefetch } = useMusicFiles();
+  const [searchText, setSearchText] = useState("");
 
   const handleMusicItemClick = async (index: number) => {
     try {
@@ -58,11 +60,25 @@ export function Playlist({ navigation }: PlaylistProps): JSX.Element {
             <RefreshControl refreshing={loading} onRefresh={requestRefetch} />
           }
           keyExtractor={({ url }) => url}
+          ListHeaderComponent={
+            <SearchBar searchText={searchText} setSearchText={setSearchText} />
+          }
           renderItem={(song) => (
             <Pressable
               key={song.item.title}
               onPress={() => handleMusicItemClick(song.index)}
-              style={styles.listButton}>
+              style={[
+                styles.listButton,
+                // eslint-disable-next-line react-native/no-inline-styles
+                {
+                  display:
+                    typeof song.item.title === "string" &&
+                    searchText.length > 0 &&
+                    !new RegExp(searchText, "i").test(song.item.title)
+                      ? "none"
+                      : undefined,
+                }, // To hide music item that does not matches the search text
+              ]}>
               <View>
                 <Image
                   source={{
@@ -97,7 +113,6 @@ const styles = StyleSheet.create({
   listContainer: {
     paddingVertical: 4,
     paddingHorizontal: 8,
-    // width: "95%",
   },
   listButton: {
     padding: 12,
