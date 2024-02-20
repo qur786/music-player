@@ -18,9 +18,7 @@ export async function setupPlayer(): Promise<boolean> {
     await TrackPlayer.getActiveTrack();
     isSetup = true;
   } catch {
-    await TrackPlayer.setupPlayer({
-      autoHandleInterruptions: true,
-    });
+    await TrackPlayer.setupPlayer();
     try {
       let capabilities = [
         Capability.Play,
