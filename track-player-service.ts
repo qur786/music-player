@@ -32,7 +32,8 @@ export async function setupPlayer(): Promise<boolean> {
       ]; // other capabilities are not supported via notification
       await TrackPlayer.updateOptions({
         android: {
-          appKilledPlaybackBehavior: AppKilledPlaybackBehavior.ContinuePlayback,
+          appKilledPlaybackBehavior:
+            AppKilledPlaybackBehavior.StopPlaybackAndRemoveNotification,
         },
         alwaysPauseOnInterruption: false,
         capabilities,
