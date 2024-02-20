@@ -85,7 +85,7 @@ export function MusicProvider({ children }: PropsWithChildren): JSX.Element {
         if (isMusicFilesReadPermissions) {
           const songsResults = await getAll({
             minSongDuration: 1000,
-            sortOrder: SortSongOrder.DESC,
+            sortOrder: SortSongOrder.ASC,
             sortBy: SortSongFields.TITLE,
           });
 

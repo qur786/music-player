@@ -77,7 +77,6 @@ export const trackPlayerPlaybackService: ServiceHandler = async () => {
     TrackPlayer.seekBy(-10).catch(console.log);
   });
   TrackPlayer.addEventListener(Event.PlaybackProgressUpdated, async (event) => {
-    console.log(event.position);
     try {
       const currentTrack = await TrackPlayer.getActiveTrack();
       const currentTime = event.position;
