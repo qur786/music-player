@@ -2,6 +2,12 @@
 
 RhythmiQ is a React Native Android app that serves as a music player for locally available songs on a smartphone. It provides a user-friendly interface with features such as a music player and a playlist screen.
 
+## Screenshots
+
+<img src="https://github.com/qur786/rhythmiq/assets/79472606/a24b9775-49eb-4860-87a6-eb3cdb1a0df1" alt="Initial Screen" width="200" height="400" />
+<img src="https://github.com/qur786/rhythmiq/assets/79472606/262e16b5-3bb7-482f-b8f7-f615330acc09" alt="Initial Screen" width="200" height="400" />
+<img src="https://github.com/qur786/rhythmiq/assets/79472606/39841ebd-cf65-41f2-80f0-020d294c8b3b" alt="Initial Screen" width="200" height="400" />
+
 ## Features
 
 - Music player with controls for play, pause, skip next, skip previous, jump forward, jump backward, and time update with a slider.
