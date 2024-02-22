@@ -1,6 +1,7 @@
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { JumpInterval } from "../../utils";
 import type { PressableProps } from "react-native";
+import Share from "react-native-share";
 import Snackbar from "react-native-snackbar";
 import { Pressable, StyleSheet, View } from "react-native";
 import React, { useEffect, useState } from "react";
@@ -54,6 +55,22 @@ export function Controllers(): JSX.Element {
     }
   };
 
+  const handleSharing: PressableProps["onPress"] = async () => {
+    const currentTrack = await TrackPlayer.getActiveTrack();
+    try {
+      await Share.open({
+        url: "file://" + currentTrack?.url,
+      });
+    } catch (error) {
+      if (error instanceof Error && error.message !== "User did not share") {
+        Snackbar.show({
+          text: "Error while sharing the file.",
+          duration: Snackbar.LENGTH_LONG,
+        });
+      }
+    }
+  };
+
   const handleRepeatModePress: PressableProps["onPress"] = () => {
     setRepeatMode((prev) => {
       const index = RepeatModeQueue.findIndex((ele) => ele === prev);
@@ -101,7 +118,7 @@ export function Controllers(): JSX.Element {
         </Pressable>
       </View>
       <View style={styles.shareContainer}>
-        <Pressable>
+        <Pressable onPress={handleSharing}>
           <Icon name="share" size={26} color="#E74292" />
         </Pressable>
         <Pressable onPress={handleRepeatModePress}>
