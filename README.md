@@ -13,6 +13,7 @@ RhythmiQ is a React Native Android app that serves as a music player for locally
 - Music player with controls for play, pause, skip next, skip previous, jump forward, jump backward, and time update with a slider.
 - Playlist screen to display available songs on the mobile device.
 - Background music playback with controls accessible from the notification panel.
+- Sharing music over different mediums such as social platforms, Bluetooth, or WiFi.
 
 ## Installation
 
